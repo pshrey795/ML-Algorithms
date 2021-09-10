@@ -1,3 +1,4 @@
+from os import error
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
@@ -66,14 +67,20 @@ def main():
     #Setting up parameters for learning
     epsilon = 1e-10
     eta = 1e-3
-    batch_size = 1000000
+    batch_size = 1
 
-    theta, epoch, finalError, finalCost = stochasticGradientDescent(x,y,epsilon,eta,batch_size)
+    #theta, epoch, finalError, finalCost = stochasticGradientDescent(x,y,epsilon,eta,batch_size)
 
-    print(theta)
-    print(epoch)
-    print(finalError)
-    print(finalCost)
+    theta = np.array([[3], [1], [2]])
+    x_test_1 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=0)
+    x_test_2 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=1)
+    y_test = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=2)
+
+    x_test = np.ones((y_test.shape[0],1))
+    x_test = np.append(x_test,x_test_1,axis=1)
+    x_test = np.append(x_test,x_test_2,axis=1)
+    error = cost(theta,x_test,y_test)
+    print(error)
 
 
 if __name__ == "__main__":

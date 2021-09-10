@@ -1,6 +1,7 @@
 Epsilon = 1e-10
 Eta = 0.001
 
+Training
 1)  Batch Size = 1:
     Theta [[3.0258821 ], [0.95678845],[2.03861167]]
     Epochs 3
@@ -24,3 +25,19 @@ Eta = 0.001
     Epochs 3300
     Final Error [[1.1843076e-06]]
     Final Cost [[1.1843076]]
+
+
+Testing
+Error with original hypothesis = [[0.98294692]]
+
+1)  Batch Size = 1:
+    Error with trained hypothesis = [[1.15167882]]
+
+2)  Batch Size = 100:
+    Error with trained hypothesis = [[0.98319507]]
+
+3)  Batch Size = 10000:
+    Error with trained hypothesis = [[0.98329792]]
+
+4)  Batch Size = 1000000:
+    Error with trained hypothesis = [[4.70068383]]
