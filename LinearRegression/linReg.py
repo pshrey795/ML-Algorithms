@@ -1,65 +1,81 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-#Setting up matrices/vectors for linear regression
-x = np.loadtxt("linearX.csv", delimiter=",", ndmin=2)
-
-#Normalising the data
-x -= np.mean(x)
-x /= np.sqrt(np.var(x))
-m = np.size(x)
-x = np.insert(x,1,1,axis=1)
-y = np.loadtxt("linearY.csv", delimiter=",", ndmin=2)
-
-#Setting up parameters for learning
-theta = np.array([[0.0],[0.0]], ndmin=2)
-epsilon = 1e-15
-eta = 1e-2
+import matplotlib.animation as anim
+from mpl_toolkits.mplot3d import Axes3D as plt3d
+import sys
 
 #Cost function(MSE) i.e. J(theta)
-def cost(t):
+def cost(t,x,y):
     diff = y - np.matmul(x,t)
-    acc = 0
-    for i in range(m):
-        acc += (diff[i]*diff[i])/(2*m)
-    return acc
+    m = np.size(y)
+    return (np.matmul(diff.T,diff))/(2*m)
 
-#Training using Batch Gradient Descent
-prevCost = -1.0
-nextCost = cost(theta)
-itr = 0
+def gradient(x,y,t):
+    diff = y - np.matmul(x,t)
+    return np.matmul(x.T,diff)
 
-#For tracking the parameters for plotting
+def gradientDescent(x,y,epsilon,eta):
+    #Inserting intercept term
+    x = np.insert(x,0,1,axis=1)
+    m = x.shape[0]
 
-#Convergence when cost between consecutive iterations changes less than epsilon
-while(abs(nextCost-prevCost)>epsilon or prevCost<0):
-    prevCost = nextCost
+    #For tracking the parameter values and the corresponding error values throughout the course of the algorithm
+    theta = np.zeros((x.shape[1],1))
+    theta1 = np.array([0])
+    theta0 = np.array([0])
 
-    #Parameter update using gradient update
-    diff = (y - np.matmul(x,theta))
-    for i in range(m):
-        coeff = (eta*diff[i])/(m)
-        theta += coeff * (x[i].T).reshape((2,1))
+    #Training using Batch Gradient Descent
+    prevCost = -1.0
+    nextCost = cost(theta,x,y)
+    costVector = np.array([nextCost])
+    itr = 0
+
+    #Convergence when cost between consecutive iterations changes less than epsilon
+    while(abs(nextCost-prevCost)>epsilon or prevCost<0):
+        prevCost = nextCost
+
+        #Parameter update using gradient update
+        theta += eta * gradient(x,y,theta) / m
+        
+        itr += 1
+        nextCost = cost(theta,x,y)
+
+    return theta, itr, nextCost
     
-    nextCost = cost(theta)
-    itr += 1
 
-#Final paramter values
-print(theta)                
-print(itr)                  #Number of iterations
-print(nextCost)             #Final cost
+def main():
 
-x_p = x.T[0].reshape((100,1))
+    #Setting up matrices/vectors for linear regression
+    x = np.loadtxt("linearX.csv", delimiter=",", ndmin=2)
+    y = np.loadtxt("linearY.csv", delimiter=",", ndmin=2)
 
-#Comparing given data and predicted data (1(b))
-plt.scatter(x_p,y,c="r",label="Given Data")
-plt.plot(x_p,(np.matmul(x,theta)),c="b",label="Hypothesis Prediction")
-plt.title("Given v/s Predicted")
-plt.xlabel("Acidity")
-plt.ylabel("Wine Density")
-plt.legend()
-plt.show()
+    #Normalising the data
+    x -= np.mean(x)
+    x /= np.sqrt(np.var(x))
 
+    #Setting up parameters for learning
+    epsilon = 1e-15
+    eta = 1e-3
+
+    theta, iterations, finalCost = gradientDescent(x,y,epsilon,eta)
+
+    #Final paramter values
+    print(theta)                
+    print(iterations)                  #Number of iterations
+    print(finalCost)                   #Final cost
+
+    #Comparing given data and predicted data (1(b))
+    # x_p = x.T[0].reshape((100,1))
+    # plt.scatter(x_p,y,c="r",label="Given Data")
+    # plt.plot(x_p,(np.matmul(x,theta)),c="b",label="Hypothesis Prediction")
+    # plt.title("Given v/s Predicted")
+    # plt.xlabel("Acidity")
+    # plt.ylabel("Wine Density")
+    # plt.legend()
+    # plt.show()
+
+if __name__ == "__main__":
+    main()
 
 
  

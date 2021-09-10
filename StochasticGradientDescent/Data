@@ -1,0 +1,26 @@
+Epsilon = 1e-10
+Eta = 0.001
+
+1)  Batch Size = 1:
+    Theta [[3.0258821 ], [0.95678845],[2.03861167]]
+    Epochs 3
+    Final Error [[0.97234187]]
+    Final Cost [[1.01788279]]
+
+2)  Batch Size = 100:
+    Theta [[2.99609445], [1.00139332], [2.00376314]]
+    Epochs 6
+    Final Error [[0.00999091]]
+    Final Cost [[0.99940421]]
+
+3)  Batch Size = 10000:
+    Theta [[2.98995206], [1.0020023], [1.99898996]]
+    Epochs 204
+    Final Error [[0.00010015]]
+    Final Cost [[1.00151323]]
+
+4)  Batch Size = 1000000:
+    Theta [[1.86559152], [1.24814333], [1.91767061]]
+    Epochs 3300
+    Final Error [[1.1843076e-06]]
+    Final Cost [[1.1843076]]
