@@ -22,6 +22,7 @@ def stochasticGradientDescent(x,y,epsilon,eta,batch_size):
 
     #For tracking the parameter values and the corresponding error values throughout the course of the algorithm
     theta = np.zeros((x.shape[1],1))
+    thetaVector = theta
 
     #Training using Batch Gradient Descent
     prevCost = -1.0
@@ -43,14 +44,29 @@ def stochasticGradientDescent(x,y,epsilon,eta,batch_size):
             j = min(i+batch_size,m)
             actual_size = min(batch_size,m-i)
             theta += eta * gradient(x[i:j],y[i:j],theta)
+            thetaVector = np.append(thetaVector,theta,axis=1)
             nextCost += cost(theta,x[i:j],y[i:j])
             batch_num += batch_size
         
         epoch += 1
         nextCost /= m
 
-    return theta, epoch, nextCost, cost(theta,x,y)
+    return thetaVector.T, epoch, nextCost, cost(theta,x,y)
+
+def testModel(theta):
+    x_test_1 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=0)
+    x_test_2 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=1)
+    y_test = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=2)
+
+    x_test = np.ones((y_test.shape[0],1))
+    x_test = np.append(x_test,x_test_1,axis=1)
+    x_test = np.append(x_test,x_test_2,axis=1)
+    error = cost(theta,x_test,y_test)
+    print(error)
+
+def trackMovement(thetaVector):
     
+    return
 
 def main():
 
@@ -67,21 +83,22 @@ def main():
     #Setting up parameters for learning
     epsilon = 1e-10
     eta = 1e-3
-    batch_size = 1
+    batch_size = 100
 
-    #theta, epoch, finalError, finalCost = stochasticGradientDescent(x,y,epsilon,eta,batch_size)
+    thetaVector, epoch, finalError, finalCost = stochasticGradientDescent(x,y,epsilon,eta,batch_size)
 
-    theta = np.array([[3], [1], [2]])
-    x_test_1 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=0)
-    x_test_2 = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=1)
-    y_test = np.loadtxt("q2test.csv",delimiter=",",ndmin=2, skiprows=1, usecols=2)
+    theta = thetaVector[-1]
 
-    x_test = np.ones((y_test.shape[0],1))
-    x_test = np.append(x_test,x_test_1,axis=1)
-    x_test = np.append(x_test,x_test_2,axis=1)
-    error = cost(theta,x_test,y_test)
-    print(error)
+    print(theta)
+    print(epoch)
+    print(finalError)
+    print(finalCost)
 
+    #Testing the trained model on test data
+    #testModel(theta)
+
+    #Plotting
+    trackMovement(thetaVector)
 
 if __name__ == "__main__":
     main()

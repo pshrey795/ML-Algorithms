@@ -30,6 +30,17 @@ def GaussianDiscriminantAnalysis(x,y):
 
     return phi, mean0, mean1, cov0, cov1, cov
     
+def plot_data(x1,x2,y):
+    x1_0 = x1 * (1-y)
+    x2_0 = x2 * (1-y)
+    x1_1 = x1 * y
+    x2_1 = x2 * y
+    plt.scatter(x1_0,x2_0,c="r",label="Alaska")
+    plt.scatter(x1_1,x2_1,c="g",label="Canada")
+    plt.xlabel("x\u2081")
+    plt.xlabel("x\u2082")
+    plt.legend()
+    plt.savefig("Graph.png")
 
 def main():
 
@@ -65,6 +76,9 @@ def main():
     print(sigma0)
     print(sigma1)
     print(sigma)
+
+    #Plotting
+    plot_data(x1,x2,y)
 
 if __name__ == "__main__":
     main()

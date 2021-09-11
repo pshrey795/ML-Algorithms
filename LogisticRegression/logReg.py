@@ -61,6 +61,20 @@ def newtonMethod(x,y,epsilon):
 
     return theta, itr
     
+def plot_logistic_curve(x1,x2,y,theta):
+    x1_0 = x1 * (1-y)
+    x2_0 = x2 * (1-y)
+    x1_1 = x1 * y
+    x2_1 = x2 * y
+    x_pred = np.linspace(-2,2,100)
+    y_pred = (-1) * (theta[0] + theta[1]*x_pred) / (theta[2])
+    plt.scatter(x1_0,x2_0,c="r",label="0")
+    plt.scatter(x1_1,x2_1,c="g",label="1")
+    plt.plot(x_pred,y_pred,c="b",label="Decision Boundary")
+    plt.xlabel("x\u2081")
+    plt.xlabel("x\u2082")
+    plt.legend()
+    plt.savefig("Graph.png")
 
 def main():
 
@@ -85,19 +99,7 @@ def main():
     print(iterations)
 
     #Plotting
-    x1_0 = x1 * (1-y)
-    x2_0 = x2 * (1-y)
-    x1_1 = x1 * y
-    x2_1 = x2 * y
-    x_pred = np.linspace(-2,2,100)
-    y_pred = (-1) * (theta[0] + theta[1]*x_pred) / (theta[2])
-    plt.scatter(x1_0,x2_0,c="r",label="0")
-    plt.scatter(x1_1,x2_1,c="g",label="1")
-    plt.plot(x_pred,y_pred,c="b",label="Decision Boundary")
-    plt.xlabel("x\u2081")
-    plt.xlabel("x\u2082")
-    plt.legend()
-    plt.show()
+    plot_logistic_curve(x1,x2,y,theta)
 
 if __name__ == "__main__":
     main()
