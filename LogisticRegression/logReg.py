@@ -75,6 +75,7 @@ def plot_logistic_curve(x1,x2,y,theta):
     plt.xlabel("x\u2082")
     plt.legend()
     plt.savefig("Graph.png")
+    plt.close()
 
 def main():
 

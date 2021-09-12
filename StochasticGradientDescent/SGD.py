@@ -66,7 +66,8 @@ def testModel(theta):
 
 def trackMovement(thetaVector):
     
-    return
+    plt.savefig("Graph.png")
+    plt.close()
 
 def main():
 
