@@ -139,7 +139,7 @@ def main():
 
     #Setting up parameters for learning
     epsilon = 1e-10
-    eta = 0.01
+    eta = 0.001
 
     plotCurve = False
     plotMesh = False

@@ -99,19 +99,19 @@ def trackMovement(thetaVector):
     animate = anim.FuncAnimation(fig,nextFrame,frames=thetaVector.shape[0],interval=0.001,repeat=False,blit=True)
     nextFrame(thetaVector.shape[0])
     
-    plt.title("Movement of Parameters")
+    plt.title("Movement of Parameters(Batch Size=1)")
     ax.set_xlabel("theta\u2080")
     ax.set_ylabel("theta\u2081")
     ax.set_zlabel("theta\u2082")
     ax.legend()
-    plt.savefig("Graph_1000000.png")
+    plt.savefig("Graph_1.png")
     plt.show()
     plt.close(fig)
 
 def main():
 
     doTest = False
-    plotCurve = False
+    plotCurve = True
 
     #Sampling 1 million data points(Q-2A)
     m = 1000000
@@ -126,7 +126,7 @@ def main():
     #Setting up parameters for learning
     epsilon = 1e-10
     eta = 1e-3
-    batch_size = 1000000
+    batch_size = 1
 
     #Resultant parameters after training(Q-2B)
     thetaVector, epoch, finalError, finalCost = stochasticGradientDescent(x,y,epsilon,eta,batch_size)

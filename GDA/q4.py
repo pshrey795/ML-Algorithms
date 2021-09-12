@@ -77,8 +77,6 @@ def plot_linear_separator(mu0,mu1,sigma,x1,x2,y):
     plt.title("Linear Separation in GDA")
     plt.xlabel("x\u2081")
     plt.ylabel("x\u2082")
-    plt.legend()
-    plt.savefig("Graph.png")
 
 def plot_quad_separator(mu0,mu1,sigma0,sigma1,x1,x2,y):
     x1_0 = x1 * (1-y)
@@ -119,7 +117,7 @@ def plot_quad_separator(mu0,mu1,sigma0,sigma1,x1,x2,y):
                 x2_pred = np.append(x2_pred,X2[i][j])
 
     #Plotting the sampled points using line plot
-    plt.plot(x1_pred,x2_pred,c="blue")
+    plt.plot(x1_pred,x2_pred,c="orange",label="Quadratic Separator")
     plt.title("Quadratic Separation in GDA")
     plt.xlabel("x\u2081")
     plt.ylabel("x\u2082")
